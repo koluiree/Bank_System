@@ -23,10 +23,10 @@ TRANSLATE = {'Ь': '', 'ь': '', 'Ъ': '', 'ъ': '', 'А': 'A', 'а': 'a', 'Б':
              'Ц': 'Tc', 'ц': 'tc', 'Ч': 'Ch', 'ч': 'ch', 'Ш': 'Sh', 'ш': 'sh', 'Щ': 'Shch', 'щ': 'shch', 'Ы': 'Y',
              'ы': 'y', 'Э': 'E', 'э': 'e', 'Ю': 'Iu', 'ю': 'iu', 'Я': 'Ia', 'я': 'ia', ' ': ' '}
 
-ALPHABET = ['Ь', 'ь', 'Ъ', 'ъ', 'А', 'а', 'Б', 'б', 'В', 'в', 'Г', 'г', 'Д', 'д', 'Е', 'е', 'Ё', 'ё',
+ALPHABET = [' ', '', 'Ь', 'ь', 'Ъ', 'ъ', 'А', 'а', 'Б', 'б', 'В', 'в', 'Г', 'г', 'Д', 'д', 'Е', 'е', 'Ё', 'ё',
             'Ж', 'ж', 'З', 'з', 'И', 'и', 'Й', 'й', 'К', 'к', 'Л', 'л', 'М', 'м', 'Н', 'н', 'О', 'о',
             'П', 'п', 'Р', 'р', 'С', 'с', 'Т', 'т', 'У', 'у', 'Ф', 'ф', 'Х', 'х', 'Ц', 'ц', 'Ч', 'ч',
-            'Ш', 'ш', 'Щ', 'щ', 'Ы', 'ы', 'Э', 'э', 'Ю', 'ю', 'Я', 'я', ' ', '']
+            'Ш', 'ш', 'Щ', 'щ', 'Ы', 'ы', 'Э', 'э', 'Ю', 'ю', 'Я', 'я']
 
 
 def generate_random_number(pay_system):
@@ -72,13 +72,20 @@ validity = date_now.replace(year=date_now.year + 6).strftime("%m/%y")
 
 def full_data_of_card(pay_system, name, cvv_code=randint(100, 999)) -> tuple:
     global validity
-    name = translating_name(name).upper()
-    return luhn_algorithm(pay_system), cvv_code, validity, name
+
+    card_number = luhn_algorithm(pay_system)
+    tr_full_name = translating_name(name).split()
+    tr_name = tr_full_name[0]
+    tr_surname = tr_full_name[1]
+    individual_user_number = hex(int(card_number))[2:]
+
+    return card_number, cvv_code, validity, tr_name.capitalize(), tr_surname.capitalize(), individual_user_number
 
 
 def translating_name(name) -> str:
     translated_name = ""
     checking_data(name)
+
     for i in name.lower():
         translated_name += TRANSLATE[i]
 
