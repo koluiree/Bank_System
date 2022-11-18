@@ -16,6 +16,18 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>700</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Создание дебетовой карты</string>
   </property>
@@ -384,6 +396,16 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>name_edit</tabstop>
+  <tabstop>surname_edit</tabstop>
+  <tabstop>patronymic_edit</tabstop>
+  <tabstop>mir</tabstop>
+  <tabstop>visa</tabstop>
+  <tabstop>mastercard</tabstop>
+  <tabstop>create_button</tabstop>
+  <tabstop>previous_window_button</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <buttongroups>

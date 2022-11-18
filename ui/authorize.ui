@@ -16,6 +16,18 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>700</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Авторизация</string>
   </property>
@@ -242,6 +254,12 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>login_edit</tabstop>
+  <tabstop>password_edit</tabstop>
+  <tabstop>authorize_button</tabstop>
+  <tabstop>registration_button</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
