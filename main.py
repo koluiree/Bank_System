@@ -1,5 +1,7 @@
 import RegistrationWindow as Rw
+import PasswordGenerator as Pg
 import sys
+import sqlite3
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
@@ -21,7 +23,21 @@ class Authorize(QMainWindow):
         self.registration_button.clicked.connect(self.registration_redirect)
 
     def log_in(self):
-        self.close()
+        con = sqlite3.connect("bank_info.sqlite")
+        cur = con.cursor()
+        login, password = self.login_edit.text(), self.password_edit.text()
+        try:
+            Pg.check_login(login)
+            Pg.check_password(password)
+        except Exception:
+            self.error_label.setText("Данные введены неверно")
+
+        cur.execute(f"""SELECT individual_user_number FROM account_info WHERE {login} IN login""")
+
+
+
+        # con.commit()
+        con.close()
 
     def registration_redirect(self):
         self.registration_window = Rw.Registration()
