@@ -17,12 +17,17 @@ class PersonalCabinet(QMainWindow):
         con = sqlite3.connect("bank_info.sqlite")
         cur = con.cursor()
 
-        card, cvv2, validity = cur.execute(f"""SELECT card_number, cvv2, validity FROM account_info
+        card, cvv2, validity, pay_system = cur.execute(f"""SELECT card_number, cvv2, validity, pay_system FROM account_info
         WHERE individual_user_number == '{self.active_account}'""").fetchone()
+
+        pay_system = cur.execute(f"""SELECT systems FROM pay_systems WHERE id == {pay_system}""").fetchone()[0]
 
         name = cur.execute(f"""SELECT translated_name, translated_surname FROM user_info
         WHERE individual_user_number == '{self.active_account}'""").fetchone()
         con.close()
+
+        pixmap_system = QPixmap(f"pictures/{pay_system}.png").scaled(81, 61)
+        self.pay_system_label.setPixmap(pixmap_system)
 
         card_on_label = ''
         for i, num in zip(str(card), range(17)):
