@@ -1,5 +1,6 @@
 import RegistrationWindow as Rw
 import PasswordGenerator as Pg
+import PersonalCabinet as Pc
 import sys
 import sqlite3
 
@@ -18,6 +19,7 @@ class Authorize(QMainWindow):
 
         self.create_card_window = None
         self.registration_window = None
+        self.personal_cabinet = None
 
         self.authorize_button.clicked.connect(self.log_in)
         self.registration_button.clicked.connect(self.registration_redirect)
@@ -25,19 +27,29 @@ class Authorize(QMainWindow):
     def log_in(self):
         con = sqlite3.connect("bank_info.sqlite")
         cur = con.cursor()
-        login, password = self.login_edit.text(), self.password_edit.text()
         try:
+            login, password = self.login_edit.text(), self.password_edit.text()
             Pg.check_login(login)
             Pg.check_password(password)
+
+            individual_numb = cur.execute(f"""SELECT individual_user_number FROM account_info 
+            WHERE login == '{login}'""").fetchone()[0]
+
+            password_db = cur.execute(f"""SELECT password FROM account_info 
+            WHERE individual_user_number == '{individual_numb}'""").fetchone()[0]
+
+            if password_db != password:
+                raise Pg.LetterError
+
+            con.close()
+
+            self.personal_cabinet = Pc.PersonalCabinet(individual_numb)
+            self.personal_cabinet.show()
+            self.close()
         except Exception:
             self.error_label.setText("Данные введены неверно")
 
-        cur.execute(f"""SELECT individual_user_number FROM account_info WHERE {login} IN login""")
 
-
-
-        # con.commit()
-        con.close()
 
     def registration_redirect(self):
         self.registration_window = Rw.Registration()

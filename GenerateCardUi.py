@@ -53,10 +53,6 @@ class GenerateCard(QMainWindow):
 
             self.card_data = Cdg.full_data_of_card(self.pay_system, full_name)
             self.end_registration()
-
-            self.personal_cabinet = Pc.PersonalCabinet()
-            self.personal_cabinet.show()
-            self.close()
         except Cdg.ImportNameError:
             self.error_label.setText("Некорректно введены данные")
         except Cdg.PaySystemError:
@@ -76,6 +72,10 @@ class GenerateCard(QMainWindow):
 
         con.commit()
         con.close()
+
+        self.personal_cabinet = Pc.PersonalCabinet(self.card_data[5])
+        self.personal_cabinet.show()
+        self.close()
 
     def redirect_to_registration(self):
         self.registration_window = Rw.Registration()
