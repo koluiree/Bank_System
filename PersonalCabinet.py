@@ -20,8 +20,10 @@ class PersonalCabinet(QMainWindow):
         card, cvv2, validity, pay_system = cur.execute(f"""SELECT card_number, cvv2, validity, pay_system FROM account_info
         WHERE individual_user_number == '{self.active_account}'""").fetchone()
 
+        # выносим платёжную систему пользователя, для того чтобы указать ее на картинке в личном кабинете
         pay_system = cur.execute(f"""SELECT systems FROM pay_systems WHERE id == {pay_system}""").fetchone()[0]
 
+        # тоже самое с остальными данными
         name = cur.execute(f"""SELECT translated_name, translated_surname FROM user_info
         WHERE individual_user_number == '{self.active_account}'""").fetchone()
         con.close()
@@ -29,6 +31,7 @@ class PersonalCabinet(QMainWindow):
         pixmap_system = QPixmap(f"pictures/{pay_system}.png").scaled(81, 61)
         self.pay_system_label.setPixmap(pixmap_system)
 
+        # костыль для создания красивых разделений у номера карты :)
         card_on_label = ''
         for i, num in zip(str(card), range(17)):
             if num % 4 == 0:
@@ -38,6 +41,7 @@ class PersonalCabinet(QMainWindow):
 
         name = ' '.join(name)
 
+        # сбор всех данных и вывод их в окно
         self.name_label.setText(name)
         self.card_number_label.setText(card_on_label)
         self.cvv2_label.setText(str(cvv2))

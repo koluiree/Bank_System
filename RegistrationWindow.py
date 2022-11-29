@@ -10,6 +10,7 @@ from PyQt5.QtGui import QPixmap
 
 DATA = None
 
+
 class Registration(QMainWindow):
     def __init__(self):
         super(Registration, self).__init__()
@@ -17,7 +18,6 @@ class Registration(QMainWindow):
 
         self.main_window = None
         self.generate_card_window = None
-
 
         pixmap = QPixmap("pictures/Yandex_Lyceum_logo.png").scaled(430, 80)
 
@@ -28,6 +28,7 @@ class Registration(QMainWindow):
         self.next_stage_button.clicked.connect(self.registration)
 
     def registration(self):
+        # Флаги для проверки пароля и логина, введенных пользователем
         login_flag = False
         password_flag = False
 
@@ -53,6 +54,7 @@ class Registration(QMainWindow):
             if self.password_edit.text() != self.confirm_password_edit.text():
                 self.error_label.setText('Пароли не совпадают!')
 
+        # Если пароль с логином оказались подходящими, перенаправив на функции запоминания данных и смены окна
         if password_flag and login_flag:
             self.account_data()
             self.next_stage()
@@ -74,4 +76,4 @@ class Registration(QMainWindow):
 
     def account_data(self):
         global DATA
-        DATA = (self.login_edit.text(), self.password_edit.text())
+        DATA = (self.login_edit.text(), self.password_edit.text())  # Запоминаются данные пользователя

@@ -1,3 +1,4 @@
+"""Перед этим файлом рекомендуется просмотреть файл CardDataGenerator"""
 import CardDataGenerator as Cdg
 import RegistrationWindow as Rw
 import PersonalCabinet as Pc
@@ -32,7 +33,7 @@ class GenerateCard(QMainWindow):
         self.previous_window_button.clicked.connect(self.redirect_to_registration)
         self.create_button.clicked.connect(self.creating_card)
 
-    def creating_card(self):
+    def creating_card(self):  # проверка всех данных, в большинстве используются методы из файла CardDataGenerator
         for i in self.pay_system_button_group.buttons():
             if i.isChecked():
                 self.pay_system = i.objectName()
@@ -58,6 +59,7 @@ class GenerateCard(QMainWindow):
         except Cdg.PaySystemError:
             self.error_label.setText("Выберите банковскую систему")
 
+    # здесь происходит ввод данных пользователя в базу данных банка, ведь регистрация заканчивается
     def end_registration(self):
         con = sqlite3.connect("bank_info.sqlite")
         cur = con.cursor()

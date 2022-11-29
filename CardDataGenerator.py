@@ -10,8 +10,8 @@ class PaySystemError(Exception):
     pass
 
 
-pay_system_number = {'visa': '4', 'mastercard': '5', 'mir': '2'}
-individual_bank_number = '739'
+pay_system_number = {'visa': '4', 'mastercard': '5', 'mir': '2'}  # префиксы платёжных систем
+individual_bank_number = '739'  # индивидуальный номер банка, как опознательный знак, что эта карта была выдана данным банком
 
 random_number = ''
 
@@ -34,12 +34,15 @@ def generate_random_number(pay_system):
     randnums = ""
     random_number = ""
 
+    # В данной функции выполняется рандомная генерация номера карты, далее этот номер проверяется по алгоритму ниже
     for _ in range(11):
         randnums += str(randint(0, 9))
 
     random_number += pay_system_number[pay_system] + individual_bank_number + randnums
 
 
+# Здесь выполняется алгоритм Луна, чтобы понять логику его действия рекомендуется ознакомиться с работой алгоритма
+# https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%9B%D1%83%D0%BD%D0%B0
 def luhn_algorithm(pay_system) -> str:
     generate_random_number(pay_system)
     odd_sum = 0
@@ -58,6 +61,7 @@ def luhn_algorithm(pay_system) -> str:
                 odd_sum += (int(i) * 2) - 9
 
     control_sum = even_sum + odd_sum
+    # здесь подбирается контрольная цифра карты, которая решит, будет ли карта подходить условиям алгоритма или нет
     if str(control_sum % 10)[-1] != "0":
         valid_credit_card = random_number + str(10 - (control_sum % 10))
     else:
@@ -67,9 +71,10 @@ def luhn_algorithm(pay_system) -> str:
 
 
 date_now = datetime.date.today()
-validity = date_now.replace(year=date_now.year + 6).strftime("%m/%y")
+validity = date_now.replace(year=date_now.year + 6).strftime("%m/%y")  # выделение шести лет на обслуживание карты от сегодняшней даты
 
 
+# это функция создана для сбора всех сгенерированных данных карты, чтобы не собирать по отдельности
 def full_data_of_card(pay_system, name, cvv_code=randint(100, 999)) -> tuple:
     global validity
 
@@ -87,12 +92,12 @@ def translating_name(name) -> str:
     checking_data(name)
 
     for i in name.lower():
-        translated_name += TRANSLATE[i]
+        translated_name += TRANSLATE[i]  # перевод имени с русского на английский (транслитом)
 
     return translated_name
 
 
-def checking_data(name):
+def checking_data(name):  # проверка введенных данных пользователя на недопустимые символы
     for i in name:
         if i not in ALPHABET:
             raise ImportNameError

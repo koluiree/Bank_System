@@ -1,3 +1,4 @@
+"""Рекомендуется сначала просмотреть файл PasswordGenerator"""
 import RegistrationWindow as Rw
 import PasswordGenerator as Pg
 import PersonalCabinet as Pc
@@ -16,7 +17,7 @@ class Authorize(QMainWindow):
 
         pixmap = QPixmap("pictures/Yandex_Lyceum_logo.png").scaled(430, 80)
         self.image_label.setPixmap(pixmap)
-
+        # Создаю переменные в которых будут храниться окна для дальнейшего перенаправления
         self.create_card_window = None
         self.registration_window = None
         self.personal_cabinet = None
@@ -28,16 +29,16 @@ class Authorize(QMainWindow):
         con = sqlite3.connect("bank_info.sqlite")
         cur = con.cursor()
         try:
-            login, password = self.login_edit.text(), self.password_edit.text()
+            login, password = self.login_edit.text(), self.password_edit.text() # Получаю логин и пароль введенные пользователем
             Pg.check_login(login)
             Pg.check_password(password)
-
+            # Получаю индивидуальный номер пользователя
             individual_numb = cur.execute(f"""SELECT individual_user_number FROM account_info 
             WHERE login == '{login}'""").fetchone()[0]
 
             password_db = cur.execute(f"""SELECT password FROM account_info 
             WHERE individual_user_number == '{individual_numb}'""").fetchone()[0]
-
+            # Получаю пароль из базы данных по индивидуальному номеру и сверяю его с введенным пользователем паролем
             if password_db != password:
                 raise Pg.LetterError
 
@@ -48,8 +49,6 @@ class Authorize(QMainWindow):
             self.close()
         except Exception:
             self.error_label.setText("Данные введены неверно")
-
-
 
     def registration_redirect(self):
         self.registration_window = Rw.Registration()
