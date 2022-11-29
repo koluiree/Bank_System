@@ -10,6 +10,7 @@ from PyQt5.QtGui import QPixmap
 
 DATA = None
 
+
 class Registration(QMainWindow):
     def __init__(self):
         super(Registration, self).__init__()
