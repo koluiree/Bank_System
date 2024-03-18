@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -24,7 +24,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
+    <width>600</width>
     <height>700</height>
    </size>
   </property>
@@ -47,7 +47,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>401</width>
+      <width>391</width>
       <height>81</height>
      </rect>
     </property>
@@ -60,125 +60,18 @@
      </font>
     </property>
     <property name="text">
-     <string>Добро пожаловать в приложение банка Я.Лицей!
-Пожалуйста, авторизуйтесь</string>
+     <string>Добро пожаловать в приложение банка!</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>80</y>
-      <width>46</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>5</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="login_label">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Логин</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="password_label">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Пароль</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>80</y>
-      <width>331</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
-     <property name="spacing">
-      <number>25</number>
-     </property>
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QLineEdit" name="login_edit">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="password_edit">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QLabel" name="create_account_label">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>140</x>
       <y>630</y>
-      <width>271</width>
+      <width>131</width>
       <height>21</height>
      </rect>
     </property>
@@ -189,15 +82,15 @@
      </font>
     </property>
     <property name="text">
-     <string>Нет аккаунта? Создайте его по этой кнопке!</string>
+     <string>Создать аккаунт</string>
     </property>
    </widget>
    <widget class="QPushButton" name="registration_button">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>270</x>
       <y>630</y>
-      <width>101</width>
+      <width>111</width>
       <height>23</height>
      </rect>
     </property>
@@ -213,8 +106,8 @@
    <widget class="QPushButton" name="authorize_button">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>260</y>
+      <x>290</x>
+      <y>210</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -229,37 +122,91 @@
      <string>Войти</string>
     </property>
    </widget>
-   <widget class="QLabel" name="image_label">
-    <property name="geometry">
-     <rect>
-      <x>-20</x>
-      <y>390</y>
-      <width>521</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="error_label">
     <property name="geometry">
      <rect>
-      <x>226</x>
-      <y>300</y>
-      <width>161</width>
+      <x>10</x>
+      <y>250</y>
+      <width>371</width>
       <height>31</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Arial</family>
-      <pointsize>10</pointsize>
-     </font>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
     </property>
     <property name="text">
      <string/>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QWidget" name="formLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>381</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="authorize_layout">
+     <property name="verticalSpacing">
+      <number>48</number>
+     </property>
+     <item row="1" column="0">
+      <widget class="QLabel" name="password_label">
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Пароль</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="password_edit">
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="login_label">
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Логин</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="login_edit">
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -268,14 +215,12 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
  </widget>
  <tabstops>
-  <tabstop>login_edit</tabstop>
-  <tabstop>password_edit</tabstop>
   <tabstop>authorize_button</tabstop>
   <tabstop>registration_button</tabstop>
  </tabstops>

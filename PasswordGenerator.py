@@ -1,9 +1,14 @@
 import random
 import string
+import sqlite3
 
 
 # Создаётся несколько классов для вывода ошибок
 class LengthError(Exception):
+    pass
+
+
+class LoginError(Exception):
     pass
 
 
@@ -15,7 +20,13 @@ class DigitError(Exception):
     pass
 
 
-def check_login(login):
+def check_login(login: str):
+    con = sqlite3.connect("bank_info.sqlite")
+    cur = con.cursor()
+    find_login = cur.execute(f"""SELECT login FROM account_info WHERE login == '{login}'""").fetchone()
+    con.close()
+    if not (find_login is None):
+        raise LoginError
     for i in login:
         flag = False
 

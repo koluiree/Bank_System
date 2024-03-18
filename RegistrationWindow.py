@@ -19,10 +19,6 @@ class Registration(QMainWindow):
         self.main_window = None
         self.generate_card_window = None
 
-        pixmap = QPixmap("pictures/Yandex_Lyceum_logo.png").scaled(430, 80)
-
-        self.image_label.setPixmap(pixmap)
-
         self.generate_password_button.clicked.connect(self.generate_password)
         self.previous_window_button.clicked.connect(self.redirect_to_main)
         self.next_stage_button.clicked.connect(self.registration)
@@ -39,6 +35,8 @@ class Registration(QMainWindow):
             self.error_label.setText('Длина логина должна быть не менее 4 символов!')
         except Pg.LetterError:
             self.error_label.setText('Логин содержит недопустимые символы!')
+        except Pg.LoginError:
+            self.error_label.setText('Логин занят')
 
         if login_flag:
             try:
@@ -53,7 +51,6 @@ class Registration(QMainWindow):
 
             if self.password_edit.text() != self.confirm_password_edit.text():
                 self.error_label.setText('Пароли не совпадают!')
-
         # Если пароль с логином оказались подходящими, перенаправив на функции запоминания данных и смены окна
         if password_flag and login_flag:
             self.account_data()

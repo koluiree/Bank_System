@@ -68,7 +68,7 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>121</width>
+      <width>144</width>
       <height>171</height>
      </rect>
     </property>
@@ -173,7 +173,26 @@
      <rect>
       <x>10</x>
       <y>220</y>
-      <width>131</width>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Сгенерировать пароль</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="memo_label">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>220</y>
+      <width>221</width>
       <height>31</height>
      </rect>
     </property>
@@ -184,27 +203,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Сгенерировать пароль</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="memo_label">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>220</y>
-      <width>241</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Arial</family>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Все данные должны быть на латинице!
-Длина пароля не меньше 8 символов!</string>
+     <string>Длина пароля минимум 8 символов</string>
     </property>
    </widget>
    <widget class="QPushButton" name="next_stage_button">
@@ -219,52 +218,18 @@
     <property name="font">
      <font>
       <family>Arial</family>
-      <pointsize>9</pointsize>
+      <pointsize>8</pointsize>
      </font>
     </property>
     <property name="text">
      <string>Продолжить регистрацию</string>
     </property>
    </widget>
-   <widget class="QLabel" name="image_label">
-    <property name="geometry">
-     <rect>
-      <x>-10</x>
-      <y>530</y>
-      <width>511</width>
-      <height>121</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="error_label">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>340</y>
-      <width>281</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Arial</family>
-      <pointsize>8</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QPushButton" name="previous_window_button">
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>390</y>
+      <y>350</y>
       <width>161</width>
       <height>31</height>
      </rect>
@@ -291,13 +256,13 @@
     <property name="font">
      <font>
       <family>Arial</family>
-      <pointsize>8</pointsize>
+      <pointsize>7</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
     </property>
     <property name="text">
-     <string>Длина логина должна быть больше 4 символов!</string>
+     <string>Минимум 4 символа</string>
     </property>
    </widget>
    <widget class="QLabel" name="memo_password_label">
@@ -312,7 +277,7 @@
     <property name="font">
      <font>
       <family>Arial</family>
-      <pointsize>9</pointsize>
+      <pointsize>8</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -322,6 +287,59 @@
 заглавного и строчного регистра</string>
     </property>
    </widget>
+   <widget class="QLabel" name="error_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>280</y>
+      <width>381</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>0</green>
+          <blue>4</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>0</green>
+          <blue>4</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>120</red>
+          <green>120</green>
+          <blue>120</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -329,7 +347,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

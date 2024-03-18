@@ -14,10 +14,6 @@ class GenerateCard(QMainWindow):
         super(GenerateCard, self).__init__()
         uic.loadUi("ui/generating_card.ui", self)
 
-        pixmap_mir = QPixmap("pictures/mir.png").scaled(100, 30)
-        pixmap_visa = QPixmap("pictures/visa.png").scaled(100, 30)
-        pixmap_mastercard = QPixmap("pictures/mastercard.png").scaled(100, 90)
-
         self.registration_window = None
         self.personal_cabinet = None
 
@@ -25,10 +21,6 @@ class GenerateCard(QMainWindow):
 
         self.patronymic = ""
         self.card_data = ()
-
-        self.mir_image.setPixmap(pixmap_mir)
-        self.visa_image.setPixmap(pixmap_visa)
-        self.mastercard_image.setPixmap(pixmap_mastercard)
 
         self.previous_window_button.clicked.connect(self.redirect_to_registration)
         self.create_button.clicked.connect(self.creating_card)
