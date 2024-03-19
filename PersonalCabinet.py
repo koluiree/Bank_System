@@ -1,6 +1,6 @@
 import sqlite3
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 from PyQt5.QtGui import QPixmap
 
 
@@ -15,8 +15,8 @@ class PersonalCabinet(QMainWindow):
         cur = con.cursor()
 
         data = cur.execute(f"""SELECT card_number, cvv2, validity, pay_system, balance FROM account_info
-        WHERE individual_user_number == '{self.active_account}'""").fetchone()
-        print(data)
+        WHERE login == '{self.active_account}'""").fetchone()
+
         card: str = data[0]
         cvv2: int = data[1]
         validity: str = data[2]
@@ -27,7 +27,7 @@ class PersonalCabinet(QMainWindow):
 
         # тоже самое с остальными данными
         name = cur.execute(f"""SELECT translated_name, translated_surname FROM user_info
-        WHERE individual_user_number == '{self.active_account}'""").fetchone()
+        WHERE login == '{self.active_account}'""").fetchone()
         con.close()
 
         # костыль для создания красивых разделений у номера карты :)
@@ -46,11 +46,34 @@ class PersonalCabinet(QMainWindow):
         self.cvv2_label.setText(str(cvv2))
         self.validity_label.setText(validity)
         self.pay_system_label.setText(pay_system.upper())
-        self.balance_label.setText(str(balance) + ' р')
-        self.transactions_table()
+        self.balance_label.setText(str(balance) + ' тугриков')
+        self.update_transactions_table()
 
     def update_balance(self):
         pass
 
-    def transactions_table(self):
+    def only_income_table(self):
         pass
+
+    def only_outcome_table(self):
+        pass
+
+    def update_transactions_table(self):
+        con = sqlite3.connect("bank_info.sqlite")
+        cur = con.cursor()
+
+        transactions: list = cur.execute(f"""SELECT from_user, to_user, amount FROM transactions
+                WHERE to_user == '{self.active_account}' OR from_user == '{self.active_account}'""").fetchall()
+        print(transactions)
+
+        con.close()
+
+        self.transactions_table.setColumnCount(3)
+        self.transactions_table.setRowCount(len(transactions))
+        self.transactions_table.setHorizontalHeaderLabels(["От кого", "Кому", "Сумма перевода"])
+
+        for row_num in range(len(transactions)):
+            self.transactions_table.setItem(row_num, 0, QTableWidgetItem(transactions[row_num][0]))
+            self.transactions_table.setItem(row_num, 1, QTableWidgetItem(transactions[row_num][1]))
+            self.transactions_table.setItem(row_num, 2, QTableWidgetItem(str(transactions[row_num][2])))
+

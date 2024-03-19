@@ -82,9 +82,8 @@ def full_data_of_card(pay_system, name, cvv_code=randint(100, 999)) -> tuple:
     tr_full_name = translating_name(name).split()
     tr_name = tr_full_name[0]
     tr_surname = tr_full_name[1]
-    individual_user_number = hex(int(card_number))[2:]
 
-    return card_number, cvv_code, str(validity), tr_name.capitalize(), tr_surname.capitalize(), individual_user_number
+    return card_number, cvv_code, str(validity), tr_name.capitalize(), tr_surname.capitalize()
 
 
 def translating_name(name) -> str:

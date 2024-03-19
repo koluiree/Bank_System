@@ -58,16 +58,16 @@ class GenerateCard(QMainWindow):
         account_data = Rw.DATA
         pay_system_key = cur.execute(f"SELECT id FROM pay_systems WHERE systems = '{self.pay_system}'").fetchone()[0]
 
-        cur.execute(f"""INSERT INTO account_info  VALUES ('{self.card_data[5]}', '{account_data[0]}', 
-        '{account_data[1]}',  '{self.card_data[0]}', {self.card_data[1]}, '{self.card_data[2]}', {pay_system_key})""")
+        cur.execute(f"""INSERT INTO account_info  VALUES ('{account_data[0]}', 
+        '{account_data[1]}',  '{self.card_data[0]}', {self.card_data[1]}, '{self.card_data[2]}', {pay_system_key}, {0})""")
 
-        cur.execute(f"""INSERT INTO user_info VALUES ('{self.card_data[5]}', '{self.name_edit.text()}',
+        cur.execute(f"""INSERT INTO user_info VALUES ('{account_data[0]}', '{self.name_edit.text()}',
         '{self.surname_edit.text()}', '{self.patronymic}', '{self.card_data[3]}', '{self.card_data[4]}')""")
 
         con.commit()
         con.close()
 
-        self.personal_cabinet = Pc.PersonalCabinet(self.card_data[5])
+        self.personal_cabinet = Pc.PersonalCabinet(account_data[0])
         self.personal_cabinet.show()
         self.close()
 

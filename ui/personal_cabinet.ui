@@ -230,15 +230,24 @@
      </item>
     </layout>
    </widget>
-   <widget class="QTableView" name="transactions_table">
+   <widget class="QTableWidget" name="transactions_table">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>330</y>
+      <y>400</y>
       <width>381</width>
-      <height>301</height>
+      <height>241</height>
      </rect>
     </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderHighlightSections">
+     <bool>true</bool>
+    </attribute>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

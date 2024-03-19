@@ -221,6 +221,8 @@
   </widget>
  </widget>
  <tabstops>
+  <tabstop>login_edit</tabstop>
+  <tabstop>password_edit</tabstop>
   <tabstop>authorize_button</tabstop>
   <tabstop>registration_button</tabstop>
  </tabstops>

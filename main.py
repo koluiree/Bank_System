@@ -27,22 +27,20 @@ class Authorize(QMainWindow):
         cur = con.cursor()
         try:
             login, password = self.login_edit.text(), self.password_edit.text() # Получаю логин и пароль введенные пользователем
-            # Получаю индивидуальный номер пользователя
-            individual_numb = cur.execute(f"""SELECT individual_user_number FROM account_info 
-            WHERE login == '{login}'""").fetchone()[0]
 
             password_db = cur.execute(f"""SELECT password FROM account_info 
-            WHERE individual_user_number == '{individual_numb}'""").fetchone()[0]
+            WHERE login == '{login}'""").fetchone()[0]
             # Получаю пароль из базы данных по индивидуальному номеру и сверяю его с введенным пользователем паролем
             if password_db != password:
                 raise Pg.LetterError
 
             con.close()
 
-            self.personal_cabinet = Pc.PersonalCabinet(individual_numb)
+            self.personal_cabinet = Pc.PersonalCabinet(login)
             self.personal_cabinet.show()
             self.close()
-        except Exception:
+        except Exception as e:
+            print(e)
             self.error_label.setText("Данные введены неверно")
 
     def registration_redirect(self):
