@@ -35,9 +35,9 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>0</y>
-      <width>401</width>
+      <width>381</width>
       <height>211</height>
      </rect>
     </property>
@@ -248,6 +248,52 @@
     <attribute name="verticalHeaderHighlightSections">
      <bool>true</bool>
     </attribute>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>350</y>
+      <width>381</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="incoming_button">
+       <property name="text">
+        <string>Входящие средства</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="all_button">
+       <property name="text">
+        <string>Все операции</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="outcoming_button">
+       <property name="text">
+        <string>Исходящие средства</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="transfer_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>220</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Перевести </string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

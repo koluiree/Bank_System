@@ -1,8 +1,10 @@
 import sqlite3
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
-from PyQt5.QtGui import QPixmap
+from datetime import datetime
 
+
+# сортировка с помощью .sort(time, key=lambda a: и тут по времени из модуля datetime)
 
 class PersonalCabinet(QMainWindow):
     def __init__(self, active_account):
@@ -10,6 +12,7 @@ class PersonalCabinet(QMainWindow):
         uic.loadUi("ui/personal_cabinet.ui", self)
 
         self.active_account = active_account
+        self.transfer_window = TransferInterface(self.active_account)
 
         con = sqlite3.connect("bank_info.sqlite")
         cur = con.cursor()
@@ -34,7 +37,7 @@ class PersonalCabinet(QMainWindow):
         card_on_label = ''
         for i, num in zip(str(card), range(17)):
             if num % 4 == 0:
-                card_on_label += '     ' + i
+                card_on_label += '    ' + i
             else:
                 card_on_label += i
 
@@ -49,31 +52,78 @@ class PersonalCabinet(QMainWindow):
         self.balance_label.setText(str(balance) + ' тугриков')
         self.update_transactions_table()
 
+        self.incoming_button.clicked.connect(self.only_income_table)
+        self.outcoming_button.clicked.connect(self.only_outcome_table)
+        self.all_button.clicked.connect(self.update_transactions_table)
+        self.transfer_button.clicked.connect(self.redirect_to_transfer)
+
     def update_balance(self):
         pass
 
     def only_income_table(self):
-        pass
+        con = sqlite3.connect("bank_info.sqlite")
+        cur = con.cursor()
+
+        income: list = cur.execute(f"""SELECT date, from_user, to_user, amount FROM transactions
+                        WHERE to_user == '{self.active_account}'""").fetchall()
+
+        con.close()
+
+        self.transactions_table.setRowCount(len(income))
+
+        for row_num in range(len(income) - 1, -1, -1):
+            self.transactions_table.setItem(len(income) - row_num - 1, 0, QTableWidgetItem(income[row_num][0]))
+            self.transactions_table.setItem(len(income) - row_num - 1, 1, QTableWidgetItem(income[row_num][1]))
+            self.transactions_table.setItem(len(income) - row_num - 1, 2, QTableWidgetItem(income[row_num][2]))
+            self.transactions_table.setItem(len(income) - row_num - 1, 3, QTableWidgetItem(str(income[row_num][3])))
 
     def only_outcome_table(self):
-        pass
+        con = sqlite3.connect("bank_info.sqlite")
+        cur = con.cursor()
+
+        outcome: list = cur.execute(f"""SELECT date, from_user, to_user, amount FROM transactions
+                                    WHERE from_user == '{self.active_account}'""").fetchall()
+
+        con.close()
+
+        self.transactions_table.setRowCount(len(outcome))
+
+        for row_num in range(len(outcome) - 1, -1, -1):
+            self.transactions_table.setItem(len(outcome) - row_num - 1, 0, QTableWidgetItem(outcome[row_num][0]))
+            self.transactions_table.setItem(len(outcome) - row_num - 1, 1, QTableWidgetItem(outcome[row_num][1]))
+            self.transactions_table.setItem(len(outcome) - row_num - 1, 2, QTableWidgetItem(outcome[row_num][2]))
+            self.transactions_table.setItem(len(outcome) - row_num - 1, 3, QTableWidgetItem(str(outcome[row_num][3])))
 
     def update_transactions_table(self):
         con = sqlite3.connect("bank_info.sqlite")
         cur = con.cursor()
 
-        transactions: list = cur.execute(f"""SELECT from_user, to_user, amount FROM transactions
-                WHERE to_user == '{self.active_account}' OR from_user == '{self.active_account}'""").fetchall()
-        print(transactions)
+        transactions: list = cur.execute(f"""SELECT date, from_user, to_user, amount FROM transactions
+                    WHERE to_user == '{self.active_account}' OR from_user == '{self.active_account}'""").fetchall()
 
         con.close()
 
-        self.transactions_table.setColumnCount(3)
+        self.transactions_table.setColumnCount(4)
         self.transactions_table.setRowCount(len(transactions))
-        self.transactions_table.setHorizontalHeaderLabels(["От кого", "Кому", "Сумма перевода"])
+        self.transactions_table.setHorizontalHeaderLabels(["Когда", "От кого", "Кому", "Сумма"])
 
-        for row_num in range(len(transactions)):
-            self.transactions_table.setItem(row_num, 0, QTableWidgetItem(transactions[row_num][0]))
-            self.transactions_table.setItem(row_num, 1, QTableWidgetItem(transactions[row_num][1]))
-            self.transactions_table.setItem(row_num, 2, QTableWidgetItem(str(transactions[row_num][2])))
+        for row_num in range(len(transactions) - 1, -1, -1):
+            self.transactions_table.setItem(len(transactions) - row_num - 1, 0,
+                                            QTableWidgetItem(transactions[row_num][0]))
+            self.transactions_table.setItem(len(transactions) - row_num - 1, 1,
+                                            QTableWidgetItem(transactions[row_num][1]))
+            self.transactions_table.setItem(len(transactions) - row_num - 1, 2,
+                                            QTableWidgetItem(transactions[row_num][2]))
+            self.transactions_table.setItem(len(transactions) - row_num - 1, 3,
+                                            QTableWidgetItem(str(transactions[row_num][3])))
 
+    def redirect_to_transfer(self):
+        self.transfer_window.show()
+
+
+class TransferInterface(QMainWindow):
+    def __init__(self, active_account):
+        super(TransferInterface, self).__init__()
+        uic.loadUi('ui/transfer.ui', self)
+
+        self.active_account = active_account
