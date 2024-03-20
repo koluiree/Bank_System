@@ -20,13 +20,16 @@ class DigitError(Exception):
     pass
 
 
-def check_login(login: str):
+def check_login_exists(login: str):
     con = sqlite3.connect("bank_info.sqlite")
     cur = con.cursor()
     find_login = cur.execute(f"""SELECT login FROM account_info WHERE login == '{login}'""").fetchone()
     con.close()
     if not (find_login is None):
         raise LoginError
+
+
+def check_login(login: str):
     for i in login:
         flag = False
 
@@ -67,7 +70,7 @@ def check_password(password):  # Проверка пароля на правил
         if not flag:
             raise LetterError
 
-    return 'ok'
+    return True
 
 
 def generate(n):  # Генератор пароля

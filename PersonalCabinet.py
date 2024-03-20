@@ -2,6 +2,7 @@ import sqlite3
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 from datetime import datetime
+import PasswordGenerator as Pg
 
 
 # сортировка с помощью .sort(time, key=lambda a: и тут по времени из модуля datetime)
@@ -12,7 +13,7 @@ class PersonalCabinet(QMainWindow):
         uic.loadUi("ui/personal_cabinet.ui", self)
 
         self.active_account = active_account
-        self.transfer_window = TransferInterface(self.active_account)
+        self.transfer_window = None
 
         con = sqlite3.connect("bank_info.sqlite")
         cur = con.cursor()
@@ -49,16 +50,28 @@ class PersonalCabinet(QMainWindow):
         self.cvv2_label.setText(str(cvv2))
         self.validity_label.setText(validity)
         self.pay_system_label.setText(pay_system.upper())
-        self.balance_label.setText(str(balance) + ' тугриков')
+        self.balance_label.setText(str(balance) + ' р.')
         self.update_transactions_table()
 
         self.incoming_button.clicked.connect(self.only_income_table)
         self.outcoming_button.clicked.connect(self.only_outcome_table)
         self.all_button.clicked.connect(self.update_transactions_table)
         self.transfer_button.clicked.connect(self.redirect_to_transfer)
+        self.update_button.clicked.connect(self.update_info)
+
+    def update_info(self):
+        self.update_balance()
+        self.update_transactions_table()
 
     def update_balance(self):
-        pass
+        con = sqlite3.connect("bank_info.sqlite")
+        cur = con.cursor()
+
+        balance = cur.execute(f"""SELECT balance FROM account_info WHERE login == '{self.active_account}'""").fetchone()
+
+        con.close()
+
+        self.balance_label.setText(str(balance[0]) + ' р.')
 
     def only_income_table(self):
         con = sqlite3.connect("bank_info.sqlite")
@@ -118,12 +131,43 @@ class PersonalCabinet(QMainWindow):
                                             QTableWidgetItem(str(transactions[row_num][3])))
 
     def redirect_to_transfer(self):
+        self.transfer_window = TransferInterface(self.active_account, int(self.balance_label.text().split()[0]))
         self.transfer_window.show()
 
 
 class TransferInterface(QMainWindow):
-    def __init__(self, active_account):
+    def __init__(self, active_account: str, balance: int):
         super(TransferInterface, self).__init__()
         uic.loadUi('ui/transfer.ui', self)
 
         self.active_account = active_account
+        self.balance = balance
+
+        self.back_button.clicked.connect(self.close)
+        self.transfer_button.clicked.connect(self.transfer_money)
+
+    def transfer_money(self):
+        try:
+            Pg.check_login_exists(self.login_text.text())
+            self.error_label.setText("Такого логина не существует")
+        except Pg.LoginError:
+            if self.login_text.text() == self.active_account:
+                self.error_label.setText("Перевод самому себе невозможен")
+            else:
+                transfer_login = self.login_text.text()
+                transfer_amount = int(self.amount_spin.text())
+                date = datetime.now().strftime("%d %b, %H:%M")
+                print(transfer_amount, transfer_login, date)
+                con = sqlite3.connect("bank_info.sqlite")
+                cur = con.cursor()
+                cur.execute(f"""UPDATE account_info SET balance = balance + {transfer_amount} WHERE login == '{transfer_login}'""")
+                cur.execute(
+                    f"""UPDATE account_info SET balance = balance - {transfer_amount}
+                    WHERE login == '{self.active_account}'""")
+                cur.execute(
+                    f"""INSERT INTO transactions VALUES ('{date}', '{self.active_account}',
+                    '{transfer_login}', {transfer_amount})""")
+                con.commit()
+                con.close()
+
+                self.close()

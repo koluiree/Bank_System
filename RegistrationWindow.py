@@ -41,7 +41,6 @@ class Registration(QMainWindow):
         if login_flag:
             try:
                 Pg.check_password(self.password_edit.text())
-                password_flag = True
             except Pg.LengthError:
                 self.error_label.setText('Длина пароля должна быть не менее 8 символов!')
             except Pg.LetterError:
@@ -51,6 +50,8 @@ class Registration(QMainWindow):
 
             if self.password_edit.text() != self.confirm_password_edit.text():
                 self.error_label.setText('Пароли не совпадают!')
+            else:
+                password_flag = True
         # Если пароль с логином оказались подходящими, перенаправив на функции запоминания данных и смены окна
         if password_flag and login_flag:
             self.account_data()
