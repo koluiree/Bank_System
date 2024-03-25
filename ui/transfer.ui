@@ -7,8 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>256</height>
+    <height>250</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>250</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>250</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Перевести средства</string>
@@ -45,7 +57,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>281</width>
+      <width>296</width>
       <height>61</height>
      </rect>
     </property>
@@ -67,7 +79,7 @@
      <rect>
       <x>10</x>
       <y>80</y>
-      <width>181</width>
+      <width>270</width>
       <height>81</height>
      </rect>
     </property>

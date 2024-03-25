@@ -30,9 +30,10 @@ class Registration(QMainWindow):
 
         try:
             Pg.check_login(self.login_edit.text())
+            Pg.check_login_exists(self.login_edit.text())
             login_flag = True
         except Pg.LengthError:
-            self.error_label.setText('Длина логина должна быть не менее 4 символов!')
+            self.error_label.setText('Длина логина меньше 4 символов!')
         except Pg.LetterError:
             self.error_label.setText('Логин содержит недопустимые символы!')
         except Pg.LoginError:
@@ -41,8 +42,9 @@ class Registration(QMainWindow):
         if login_flag:
             try:
                 Pg.check_password(self.password_edit.text())
+                password_flag = True
             except Pg.LengthError:
-                self.error_label.setText('Длина пароля должна быть не менее 8 символов!')
+                self.error_label.setText('Длина пароля меньше 8 символов!')
             except Pg.LetterError:
                 self.error_label.setText('Ошибка в структуре пароля!')
             except Pg.DigitError:
@@ -50,8 +52,7 @@ class Registration(QMainWindow):
 
             if self.password_edit.text() != self.confirm_password_edit.text():
                 self.error_label.setText('Пароли не совпадают!')
-            else:
-                password_flag = True
+                password_flag = False
         # Если пароль с логином оказались подходящими, перенаправив на функции запоминания данных и смены окна
         if password_flag and login_flag:
             self.account_data()

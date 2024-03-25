@@ -5,8 +5,6 @@ from datetime import datetime
 import PasswordGenerator as Pg
 
 
-# сортировка с помощью .sort(time, key=lambda a: и тут по времени из модуля datetime)
-
 class PersonalCabinet(QMainWindow):
     def __init__(self, active_account):
         super(PersonalCabinet, self).__init__()
@@ -38,7 +36,7 @@ class PersonalCabinet(QMainWindow):
         card_on_label = ''
         for i, num in zip(str(card), range(17)):
             if num % 4 == 0:
-                card_on_label += '    ' + i
+                card_on_label += '  ' + i
             else:
                 card_on_label += i
 
@@ -151,15 +149,19 @@ class TransferInterface(QMainWindow):
             Pg.check_login_exists(self.login_text.text())
             self.error_label.setText("Такого логина не существует")
         except Pg.LoginError:
+            transfer_amount = int(self.amount_spin.text())
             if self.login_text.text() == self.active_account:
                 self.error_label.setText("Перевод самому себе невозможен")
+            elif self.balance < transfer_amount:
+                self.error_label.setText("Недостаточно средств")
             else:
                 transfer_login = self.login_text.text()
-                transfer_amount = int(self.amount_spin.text())
                 date = datetime.now().strftime("%d %b, %H:%M")
                 print(transfer_amount, transfer_login, date)
+
                 con = sqlite3.connect("bank_info.sqlite")
                 cur = con.cursor()
+
                 cur.execute(f"""UPDATE account_info SET balance = balance + {transfer_amount} WHERE login == '{transfer_login}'""")
                 cur.execute(
                     f"""UPDATE account_info SET balance = balance - {transfer_amount}
@@ -167,6 +169,7 @@ class TransferInterface(QMainWindow):
                 cur.execute(
                     f"""INSERT INTO transactions VALUES ('{date}', '{self.active_account}',
                     '{transfer_login}', {transfer_amount})""")
+
                 con.commit()
                 con.close()
 
