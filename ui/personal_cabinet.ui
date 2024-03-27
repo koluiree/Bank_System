@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Личный кабинет</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../pictures/5776173.png</normaloff>../pictures/5776173.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTableWidget" name="transactions_table">
     <property name="geometry">

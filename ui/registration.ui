@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../pictures/Yandex_icon.svg.png</normaloff>../pictures/Yandex_icon.svg.png</iconset>
+    <normaloff>../pictures/5776173.png</normaloff>../pictures/5776173.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="generate_password_button">

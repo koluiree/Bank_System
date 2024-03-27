@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../pictures/Yandex_icon.svg.png</normaloff>../pictures/Yandex_icon.svg.png</iconset>
+    <normaloff>../pictures/5776173.png</normaloff>../pictures/5776173.png</iconset>
   </property>
   <property name="documentMode">
    <bool>false</bool>
@@ -111,14 +111,26 @@
    <widget class="QLabel" name="error_label">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>280</y>
-      <width>371</width>
+      <width>381</width>
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+color: red
+}</string>
     </property>
     <property name="text">
      <string/>

@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Перевести средства</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../pictures/5776173.png</normaloff>../pictures/5776173.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="transfer_button">
     <property name="geometry">
