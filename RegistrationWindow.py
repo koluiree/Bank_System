@@ -1,4 +1,4 @@
-import PasswordGenerator as Pg
+import DataCheck as Dc
 import GenerateCardUi as GCui
 import main as m
 
@@ -29,25 +29,25 @@ class Registration(QMainWindow):
         password_flag = False
 
         try:
-            Pg.check_login(self.login_edit.text())
-            Pg.check_login_exists(self.login_edit.text())
+            Dc.check_login(self.login_edit.text())
+            Dc.check_login_exists(self.login_edit.text())
             login_flag = True
-        except Pg.LengthError:
+        except Dc.LengthError:
             self.error_label.setText('Длина логина меньше 4 символов!')
-        except Pg.LetterError:
+        except Dc.LetterError:
             self.error_label.setText('Логин содержит недопустимые символы!')
-        except Pg.LoginError:
+        except Dc.LoginError:
             self.error_label.setText('Логин занят')
 
         if login_flag:
             try:
-                Pg.check_password(self.password_edit.text())
+                Dc.check_password(self.password_edit.text())
                 password_flag = True
-            except Pg.LengthError:
+            except Dc.LengthError:
                 self.error_label.setText('Длина пароля меньше 8 символов!')
-            except Pg.LetterError:
+            except Dc.LetterError:
                 self.error_label.setText('Ошибка в структуре пароля!')
-            except Pg.DigitError:
+            except Dc.DigitError:
                 self.error_label.setText('Пароль не содержит цифр!')
 
             if self.password_edit.text() != self.confirm_password_edit.text():
@@ -59,7 +59,7 @@ class Registration(QMainWindow):
             self.next_stage()
 
     def generate_password(self):
-        random_password = Pg.generate(randint(10, 16))
+        random_password = Dc.generate(randint(10, 16))
         self.password_edit.setText(random_password)
         self.confirm_password_edit.setText(random_password)
 

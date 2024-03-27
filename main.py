@@ -1,12 +1,11 @@
 import RegistrationWindow as Rw
-import PasswordGenerator as Pg
+import DataCheck as Dc
 import PersonalCabinet as Pc
 import sys
 import sqlite3
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtGui import QPixmap
 
 
 class Authorize(QMainWindow):
@@ -32,7 +31,7 @@ class Authorize(QMainWindow):
             WHERE login == '{login}'""").fetchone()[0]
             # Получаю пароль из базы данных по индивидуальному номеру и сверяю его с введенным пользователем паролем
             if password_db != password:
-                raise Pg.LetterError
+                raise Dc.LetterError
 
             con.close()
 

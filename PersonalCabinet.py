@@ -2,7 +2,7 @@ import sqlite3
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 from datetime import datetime
-import PasswordGenerator as Pg
+import DataCheck as Dc
 
 
 class PersonalCabinet(QMainWindow):
@@ -71,6 +71,29 @@ class PersonalCabinet(QMainWindow):
 
         self.balance_label.setText(str(balance[0]) + ' р.')
 
+    def update_transactions_table(self):
+        con = sqlite3.connect("bank_info.sqlite")
+        cur = con.cursor()
+
+        transactions: list = cur.execute(f"""SELECT date, from_user, to_user, amount FROM transactions
+                    WHERE to_user == '{self.active_account}' OR from_user == '{self.active_account}'""").fetchall()
+
+        con.close()
+
+        self.transactions_table.setColumnCount(4)
+        self.transactions_table.setRowCount(len(transactions))
+        self.transactions_table.setHorizontalHeaderLabels(["Когда", "От кого", "Кому", "Сумма"])
+
+        for row_num in range(len(transactions) - 1, -1, -1):
+            self.transactions_table.setItem(len(transactions) - row_num - 1, 0,
+                                            QTableWidgetItem(transactions[row_num][0]))
+            self.transactions_table.setItem(len(transactions) - row_num - 1, 1,
+                                            QTableWidgetItem(transactions[row_num][1]))
+            self.transactions_table.setItem(len(transactions) - row_num - 1, 2,
+                                            QTableWidgetItem(transactions[row_num][2]))
+            self.transactions_table.setItem(len(transactions) - row_num - 1, 3,
+                                            QTableWidgetItem(str(transactions[row_num][3])))
+
     def only_income_table(self):
         con = sqlite3.connect("bank_info.sqlite")
         cur = con.cursor()
@@ -105,29 +128,6 @@ class PersonalCabinet(QMainWindow):
             self.transactions_table.setItem(len(outcome) - row_num - 1, 2, QTableWidgetItem(outcome[row_num][2]))
             self.transactions_table.setItem(len(outcome) - row_num - 1, 3, QTableWidgetItem(str(outcome[row_num][3])))
 
-    def update_transactions_table(self):
-        con = sqlite3.connect("bank_info.sqlite")
-        cur = con.cursor()
-
-        transactions: list = cur.execute(f"""SELECT date, from_user, to_user, amount FROM transactions
-                    WHERE to_user == '{self.active_account}' OR from_user == '{self.active_account}'""").fetchall()
-
-        con.close()
-
-        self.transactions_table.setColumnCount(4)
-        self.transactions_table.setRowCount(len(transactions))
-        self.transactions_table.setHorizontalHeaderLabels(["Когда", "От кого", "Кому", "Сумма"])
-
-        for row_num in range(len(transactions) - 1, -1, -1):
-            self.transactions_table.setItem(len(transactions) - row_num - 1, 0,
-                                            QTableWidgetItem(transactions[row_num][0]))
-            self.transactions_table.setItem(len(transactions) - row_num - 1, 1,
-                                            QTableWidgetItem(transactions[row_num][1]))
-            self.transactions_table.setItem(len(transactions) - row_num - 1, 2,
-                                            QTableWidgetItem(transactions[row_num][2]))
-            self.transactions_table.setItem(len(transactions) - row_num - 1, 3,
-                                            QTableWidgetItem(str(transactions[row_num][3])))
-
     def redirect_to_transfer(self):
         self.transfer_window = TransferInterface(self.active_account, int(self.balance_label.text().split()[0]))
         self.transfer_window.show()
@@ -146,9 +146,9 @@ class TransferInterface(QMainWindow):
 
     def transfer_money(self):
         try:
-            Pg.check_login_exists(self.login_text.text())
+            Dc.check_login_exists(self.login_text.text())
             self.error_label.setText("Такого логина не существует")
-        except Pg.LoginError:
+        except Dc.LoginError:
             transfer_amount = int(self.amount_spin.text())
             if self.login_text.text() == self.active_account:
                 self.error_label.setText("Перевод самому себе невозможен")
