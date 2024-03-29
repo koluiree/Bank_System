@@ -451,6 +451,9 @@ border-radius: 10px
   <tabstop>name_edit</tabstop>
   <tabstop>surname_edit</tabstop>
   <tabstop>patronymic_edit</tabstop>
+  <tabstop>mir</tabstop>
+  <tabstop>visa</tabstop>
+  <tabstop>mastercard</tabstop>
   <tabstop>create_button</tabstop>
   <tabstop>previous_window_button</tabstop>
  </tabstops>

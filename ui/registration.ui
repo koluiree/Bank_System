@@ -398,6 +398,14 @@ border-radius: 10px
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>login_edit</tabstop>
+  <tabstop>password_edit</tabstop>
+  <tabstop>confirm_password_edit</tabstop>
+  <tabstop>generate_password_button</tabstop>
+  <tabstop>next_stage_button</tabstop>
+  <tabstop>previous_window_button</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

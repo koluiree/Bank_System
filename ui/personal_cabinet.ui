@@ -392,6 +392,14 @@ border-radius: 10px
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>transfer_button</tabstop>
+  <tabstop>update_button</tabstop>
+  <tabstop>incoming_button</tabstop>
+  <tabstop>all_button</tabstop>
+  <tabstop>outcoming_button</tabstop>
+  <tabstop>transactions_table</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
